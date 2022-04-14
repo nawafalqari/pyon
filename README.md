@@ -1,13 +1,21 @@
 # pyon
 PYON Reader - Python Object Nation
 
+## Table of Contents
+- [Installation](#installation)
+- [How to use](#how-to-use)
+    - [Creating PYON File](#lets-create-our-bpyonb-file)
+    - [Reading File](#reading-file)
+    - [Writing File](#writing-file)
+
 ## Installation
 ```bash
 pip install pyonr
 ```
 
 ## How to use
-### let's create our <b>PYON</b> file
+### Creating PYON file
+let's create our <b>PYON</b> file,
 i'm going to call it <b>friends.pyon</b>
 <br>
 
@@ -54,7 +62,7 @@ file.write(fileData)
         'name': 'Nawaf',
         'age': 15
         },
-        
+
     'khayal': {
         'name': 'Khayal',
         'age': 14
