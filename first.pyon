@@ -1,0 +1,10 @@
+{
+    'me': {
+        'name': 'Nawaf',
+        'age': 15
+        },
+    'khayal': {
+        'name': 'Khayal',
+        'age': 14
+    }
+}

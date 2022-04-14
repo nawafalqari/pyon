@@ -1,10 +1,11 @@
-# import pyonr
+import pyonr
 
-# file = pyonr.read('first.pyon')
+file = pyonr.Read('first.pyon')
+fileData = file.readfile
 
-# print(file.readfile)
+fileData['khayal'] = {
+    "name": "Khayal",
+    "age": 14
+}
 
-d = {'b': 'b'}
-
-with open('first.pyon', 'w') as file:
-    file.write(d)
+file.write(fileData)

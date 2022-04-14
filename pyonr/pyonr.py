@@ -16,7 +16,7 @@ def loads(string):
     '''
     return PYONDecoder(string).decode()
 
-class read:
+class Read:
     def __init__(self, filepath:str, auto_save:bool=False):
         if not os.path.isfile(filepath):
             raise FileExistsError(filepath)
@@ -40,12 +40,17 @@ class read:
         obj_as_string = dumps(obj)
         
         # types handling
-        if is_pyon(obj):
+        if isinstance(obj, dict):
             with open(filepath, 'w') as file:
                 file.write(obj_as_string)
 
             return True
-        if is_json(obj):
+        if is_pyon(obj_as_string):
+            with open(filepath, 'w') as file:
+                file.write(obj_as_string)
+
+            return True
+        if is_json(obj_as_string):
             with open(filepath, 'w') as file:
                 file.write(convert_json_to_pyon(obj))
 

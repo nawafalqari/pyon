@@ -1,5 +1,5 @@
 class FileExistsError(Exception):
-    def __init__(self, element, message="File does's exist"):
+    def __init__(self, element, message="File doesn's exist"):
         self.element = element
         self.message = message
 
