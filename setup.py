@@ -7,7 +7,7 @@ with open('README.md', 'r') as readme_file:
 setup(
     name='pyonr',
     packages=find_packages(),
-    version='1.0.0b1',
+    version='1.0.0b3',
     description='PYON Reader - Python Object Nation',
     author='Nawaf Alqari',
     author_email='nawafalqari13@gmail.com',
