@@ -3,17 +3,25 @@ import json
 
 from .errors import *
 
-__all__ = ['PYONDecoder', 'is_json', 'is_pyon']
-
 def is_json(obj_as_string:str):
+    '''
+    checks if `obj_as_string` is json
+    return `bool`
+    '''
     try:
         json.loads(obj_as_string)
     except ValueError:
+        return False
+    except TypeError:
         return False
     
     return True
 
 def is_pyon(obj_as_string:str):
+    '''
+    checks if `obj_as_string` is pyon
+    return `bool`
+    '''
     try:
         ast.literal_eval(obj_as_string)
     except ValueError:
@@ -22,10 +30,26 @@ def is_pyon(obj_as_string:str):
     return True
 
 def convert(string:str):
-    '''
+    """
     convert `string` to a `dict`
     works on json
+
+    ```python
+    pyon = '''
+    {
+        "user1": {
+            "username": "nawaf",
+            "email": "nawaf@domain.com",
+            "verified": True
+        }
+    }
     '''
+
+    converted = pyonr.convert(pyon)
+
+    type(converted) # <class 'dict'>
+    ```
+    """
     if not string:
         raise ArgumentTypeError(string, 'Was not expecting empty string')
 
@@ -36,19 +60,12 @@ def convert(string:str):
         
     return None
 
-def convert_json(obj_as_string):
-    '''
-    convert python dict to json string
-    '''
-
-    return json.dumps(obj_as_string)
-
-def convert_json_to_pyon(obj_as_string):
+def convert_json_to_pyon(string):
     '''
     convert json string to pyon string
     '''
-    obj_as_dict = json.loads(obj_as_string)
-    obj_as_pyon = convert(obj_as_dict)
+    obj_as_dict = json.loads(string)
+    obj_as_pyon = convert(str(obj_as_dict))
 
     return obj_as_pyon
 

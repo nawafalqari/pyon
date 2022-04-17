@@ -1,11 +1,4 @@
 import pyonr
 
-file = pyonr.Read('first.pyon')
-fileData = file.readfile
-
-fileData['khayal'] = {
-    "name": "Khayal",
-    "age": 14
-}
-
-file.write(fileData)
+tests1 = pyonr.Read('tests.pyon')
+tests2 = pyonr.Read('tests2.pyon')

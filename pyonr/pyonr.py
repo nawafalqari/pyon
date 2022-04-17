@@ -1,8 +1,11 @@
 import os
+import types
+from typing import Any
 
 from .errors import *
-from .decoder import PYONDecoder, is_pyon, is_json, convert, convert_json, convert_json_to_pyon
+from .decoder import PYONDecoder, is_pyon, is_json, convert, convert_json_to_pyon
 from .encoder import PYONEncoder
+from .dotnotation import DotNotation
 
 def dumps(obj):
     '''
@@ -10,21 +13,20 @@ def dumps(obj):
     '''
     return PYONEncoder(obj).encode()
 
-def loads(string):
+def loads(string:str):
     '''
     convert `string` (pyon) to python dict
     '''
     return PYONDecoder(string).decode()
 
 class Read:
-    def __init__(self, filepath:str, auto_save:bool=False):
+    def __init__(self, filepath:str):
         if not os.path.isfile(filepath):
             raise FileExistsError(filepath)
-        if not isinstance(auto_save, bool):
-            raise UnexpectedType(auto_save, 'Expected Bool')
+        if not filepath.endswith('.pyon'):
+            raise NotPyonFile(filepath)
         
         self.__filepath = filepath
-        self.__auto_save = auto_save
 
         with open(self.__filepath, 'r') as file:
             self.__decoder = PYONDecoder(file.read())
@@ -52,23 +54,24 @@ class Read:
             return True
         if is_json(obj_as_string):
             with open(filepath, 'w') as file:
-                file.write(convert_json_to_pyon(obj))
+                converted = str(convert(obj_as_string))
+                file.write(converted)
 
             return True
-
         
         with open(filepath, 'w') as file:
             file.write(obj_as_string)
 
     @property
-    def readfile(self):
+    def readfile(self) -> Any:
         '''
-        reads file while still updating it (if a change was occure)
+        reads file while still updating it (if a change was occurred)
         '''
         with open(self.__filepath, 'r') as file:
             self.__decoder = PYONDecoder(file.read())
             self.__file_data = self.__decoder.decode()
 
+        # return DotNotation(self.__file_data)
         return self.__file_data
 
     @property
@@ -76,11 +79,46 @@ class Read:
         '''
         return filepath
         '''
-        return self.__filepath
+        return os.path.abspath(self.__filepath)
 
-    @property
-    def auto_save(self):
+    # Magic methods
+    def __repr__(self):
+        args = []
+        args.append(f'filepath={self.filepath}')
+
+        return f'{self.__class__.__qualname__}({", ".join(args)})'
+
+    def __add__(self, other):
         '''
-        returns if user wanted the file to be autosaved
+        Return self+value.
         '''
-        return self.__auto_save
+        self_data = self.readfile
+        try:
+            other_data = other.readfile
+        except AttributeError:
+            other_data = other
+
+
+        if isinstance(self_data, dict) and isinstance(other_data, dict):
+            return {**self_data, **other_data}
+        
+        if isinstance(self_data, (list, int, str)) and isinstance(other_data, (list, int, str)):
+            return self_data + other_data
+
+    def __eq__(self, other) -> bool:
+        self_data = self.readfile
+        try:
+            other_data = other.readfile
+        except AttributeError:
+            other_data = other
+
+        return self_data == other_data
+
+    def __ne__(self, other) -> bool:
+        self_data = self.readfile
+        try:
+            other_data = other.readfile
+        except AttributeError:
+            other_data = other
+
+        return self_data != other_data
