@@ -23,7 +23,7 @@ class Read:
     def __init__(self, filepath:str):
         if not os.path.isfile(filepath):
             raise FileExistsError(filepath)
-        if not filepath.endswith('.pyon'):
+        if not filepath.endswith('.pyon') and not filepath.endswith('.ndb'):
             raise NotPyonFile(filepath)
         
         self.__filepath = filepath
@@ -63,7 +63,7 @@ class Read:
             file.write(obj_as_string)
 
     @property
-    def readfile(self) -> Any:
+    def readfile(self) -> str:
         '''
         reads file while still updating it (if a change was occurred)
         '''
@@ -71,7 +71,6 @@ class Read:
             self.__decoder = PYONDecoder(file.read())
             self.__file_data = self.__decoder.decode()
 
-        # return DotNotation(self.__file_data)
         return self.__file_data
 
     @property
