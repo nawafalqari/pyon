@@ -1,5 +1,4 @@
 import os
-import types
 from typing import Any
 
 from .errors import *
@@ -37,23 +36,20 @@ class Read:
         write `obj` to file
 
         `obj` can be pyon string or json string or python dict
+
+        return `True` on success
         '''
         filepath = self.__filepath
         obj_as_string = dumps(obj)
         
         # types handling
-        if isinstance(obj, dict):
-            with open(filepath, 'w') as file:
-                file.write(obj_as_string)
-
-            return True
-        if is_pyon(obj_as_string):
-            with open(filepath, 'w') as file:
+        if isinstance(obj, dict) or is_pyon(obj_as_string):
+            with open(filepath, 'w', encoding='utf-8') as file:
                 file.write(obj_as_string)
 
             return True
         if is_json(obj_as_string):
-            with open(filepath, 'w') as file:
+            with open(filepath, 'w', encoding='utf-8') as file:
                 converted = str(convert(obj_as_string))
                 file.write(converted)
 
@@ -63,7 +59,7 @@ class Read:
             file.write(obj_as_string)
 
     @property
-    def readfile(self) -> str:
+    def readfile(self) -> Any:
         '''
         reads file while still updating it (if a change was occurred)
         '''
