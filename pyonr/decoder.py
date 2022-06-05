@@ -23,7 +23,10 @@ def is_pyon(obj_as_string:str):
     return `bool`
     '''
     try:
-        ast.literal_eval(obj_as_string)
+        try:
+            ast.literal_eval(obj_as_string)
+        except:
+            eval(obj_as_string)
     except ValueError:
         return False
 
@@ -56,7 +59,10 @@ def convert(string:str):
     if is_json(string):
         return json.loads(string)
     if is_pyon(string):
-        return ast.literal_eval(string)
+        try:
+            return ast.literal_eval(string)
+        except:
+            return eval(string)
         
     return None
 
