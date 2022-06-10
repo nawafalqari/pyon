@@ -1,1 +1,3 @@
-[i for i in range(10)]
+{
+    "sum_example": sum([i for i in range(10)])
+}

@@ -1,3 +1,5 @@
 import pyonr
 
-print(pyonr.Read('tests.pyon').readfile)
+file = pyonr.Read('tests.pyon')
+
+print(file.readfile)

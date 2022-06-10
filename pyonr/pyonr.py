@@ -2,9 +2,10 @@ import os
 from typing import Any
 
 from .errors import *
-from .decoder import PYONDecoder, is_pyon, is_json, convert, convert_json_to_pyon
+from .decoder import PYONDecoder
 from .encoder import PYONEncoder
 from .dotnotation import DotNotation
+from .builtins import is_pyon, is_json, convert, convert_json_to_pyon
 
 def dumps(obj):
     '''
