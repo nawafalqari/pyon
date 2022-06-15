@@ -8,7 +8,7 @@ from .errors import *
 
 def fetch(url_or_path:str) -> Any:
    if os.path.isfile(url_or_path): # if "url_or_path" is a file
-      with open(url_or_path, 'r') as file:
+      with open(url_or_path, 'r', encoding='utf-8') as file:
          file_data = file.read()
 
          if is_pyon(file_data) or is_json(file_data):

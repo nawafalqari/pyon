@@ -20,15 +20,16 @@ def loads(string:str):
     return PYONDecoder(string).decode()
 
 class Read:
-    def __init__(self, filepath:str):
+    def __init__(self, filepath:str, encoding:str='utf-8'):
         if not os.path.isfile(filepath):
             raise FileExistsError(filepath)
         if not filepath.endswith('.pyon') and not filepath.endswith('.ndb'):
             raise NotPyonFile(filepath)
         
         self.__filepath = filepath
+        self.encoding = encoding
 
-        with open(self.__filepath, 'r') as file:
+        with open(self.__filepath, 'r', encoding=self.encoding) as file:
             self.__decoder = PYONDecoder(file.read())
             self.__file_data = self.__decoder.decode()
 
@@ -45,18 +46,18 @@ class Read:
         
         # types handling
         if isinstance(obj, dict) or is_pyon(obj_as_string):
-            with open(filepath, 'w', encoding='utf-8') as file:
+            with open(filepath, 'w', encoding=self.encoding) as file:
                 file.write(obj_as_string)
 
             return True
         if is_json(obj_as_string):
-            with open(filepath, 'w', encoding='utf-8') as file:
+            with open(filepath, 'w', encoding=self.encoding) as file:
                 converted = str(convert(obj_as_string))
                 file.write(converted)
 
             return True
         
-        with open(filepath, 'w') as file:
+        with open(filepath, 'w', encoding=self.encoding) as file:
             file.write(obj_as_string)
 
     @property
@@ -64,7 +65,7 @@ class Read:
         '''
         reads file while still updating it (if a change was occurred)
         '''
-        with open(self.__filepath, 'r') as file:
+        with open(self.__filepath, 'r', encoding=self.encoding) as file:
             self.__decoder = PYONDecoder(file.read())
             self.__file_data = self.__decoder.decode()
 
