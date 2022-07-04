@@ -7,11 +7,11 @@ PYON Reader - Python Object Nation
     - [Creating PYON File](#lets-create-our-bpyonb-file)
     - [Reading File](#reading-file)
     - [Writing File](#writing-file)
-- [Built-in functions](#built-in-functions)
+<!-- - [Built-in functions](#built-in-functions)
     - [PYON Built-in Funtions](#pyon-built-in-functions)
         - [fetch](#fetch)
     - [Python Built-in Funtions](#python-built-in-functions)
-        - [Examples](#examples)
+        - [Examples](#examples) -->
 
 ## Installation
 ```bash
@@ -39,8 +39,8 @@ import pyonr
 
 file = pyonr.read('friends.pyon') # Replace "friends.pyon" with your file name
 
-fileData = file.readfile # {'me': {'name': 'Nawaf', 'age': 15}}
-type(filedata) # <class 'dict'>
+fileData = file.read # {'me': {'name': 'Nawaf', 'age': 15}}
+type(fileData) # <class 'dict'>
 ```
 
 ### Writing File
@@ -48,7 +48,7 @@ type(filedata) # <class 'dict'>
 import pyonr
 
 file = pyonr.read('friends.pyon')
-fileData = file.readfile
+fileData = file.read
 
 fileData['khayal'] = {
     "name": "Khayal",
@@ -75,7 +75,7 @@ file.write(fileData)
 }
 ```
 
-## Built-in Functions
+<!-- ## Built-in Functions
 ### PYON Built-in Functions
 ### `fetch`:
 fetch is used to fetch any file/url content to the file
@@ -113,4 +113,4 @@ every `Python` built-in function is supported in `PYON`
         map(lambda e:e ** 2, [i for i in range(10)])
     )
 }
-```
+``` -->

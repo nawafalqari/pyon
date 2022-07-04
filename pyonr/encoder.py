@@ -1,11 +1,11 @@
-__all__ = ['PYONEncoder']
+from .converter import convert, PYON, OBJ
 
-def _convert(obj):
-    return str(obj)
-
-class PYONEncoder(object):
-    def __init__(self, obj):
+class PYONEncoder:
+    def __init__(self, obj, encoding):
         self.obj = obj
+        self.encoding = encoding
 
     def encode(self):
-        return _convert(self.obj)
+        obj = self.obj
+
+        return convert(OBJ, PYON, obj)
