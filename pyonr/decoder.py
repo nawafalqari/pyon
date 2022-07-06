@@ -1,4 +1,4 @@
-from .converter import convert, STR, PYON
+from .converter import convert, STR, OBJ
 
 class PYONDecoder:
     def __init__(self, obj, encoding):
@@ -8,4 +8,4 @@ class PYONDecoder:
     def decode(self):
         obj = self.obj
 
-        return convert(STR, PYON, obj)
+        return convert(STR, OBJ, obj)
